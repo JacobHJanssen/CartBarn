@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cart Barn — Club Login</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --green-deep:#16281E;
+    --brass:#9C6B1F;
+    --ink:#1A1B15;
+    --ink-soft:#454639;
+    --cream:#FFFDF8;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    background:var(--green-deep);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    min-height:100vh;
+    display:flex; align-items:center; justify-content:center;
+    padding:24px;
+  }
+  h1,h2{ font-family:'Fraunces',serif; font-weight:600; letter-spacing:-0.01em; }
+  .card{
+    background:var(--cream);
+    border-radius:12px;
+    padding:44px 40px;
+    max-width:400px;
+    width:100%;
+    box-shadow:0 30px 60px -20px rgba(0,0,0,0.5);
+  }
+  .logo-lockup{ display:flex; align-items:center; gap:10px; margin-bottom:28px; text-decoration:none; }
+  .brand{ font-family:'Fraunces',serif; font-size:19px; font-weight:700; color:var(--ink); }
+  h1{ font-size:24px; margin-bottom:8px; }
+  p.sub{ color:var(--ink-soft); font-size:15px; margin-bottom:28px; line-height:1.5; }
+  label{ display:block; font-size:13px; font-weight:600; color:var(--ink-soft); margin-bottom:6px; }
+  input{
+    width:100%; padding:13px 14px; border-radius:6px; border:2px solid #E3DCC8;
+    font-size:16px; font-family:'Inter',sans-serif; color:var(--ink); background:#fff;
+  }
+  input:focus{ outline:none; border-color:var(--brass); }
+  .hint{ font-size:13px; color:var(--ink-soft); margin-top:8px; }
+  button{
+    width:100%; margin-top:22px; padding:14px; border:none; border-radius:6px;
+    background:var(--brass); color:var(--cream); font-size:16px; font-weight:600;
+    font-family:'Inter',sans-serif; cursor:pointer;
+  }
+  button:hover{ opacity:0.92; }
+  .error{ display:none; color:#8a2f2f; font-size:14px; margin-top:10px; }
+  .foot{ margin-top:24px; padding-top:20px; border-top:1px solid #E3DCC8; font-size:14px; color:var(--ink-soft); text-align:center; }
+  .foot a{ color:var(--brass); font-weight:600; text-decoration:none; }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div class="logo-lockup">
+    <svg width="30" height="30" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="48" height="48" rx="12" fill="#9C6B1F"/>
+      <path d="M10 21 L24 9 L38 21" stroke="#FFFDF8" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="24" cy="31.5" r="8" fill="none" stroke="#FFFDF8" stroke-width="3"/>
+      <path d="M24 25.5 L24 37.5 M18 31.5 L30 31.5" stroke="#FFFDF8" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+    <span class="brand">Cart Barn</span>
+  </div>
+
+  <h1>Sign in to your course</h1>
+  <p class="sub">Enter your course ID to go to your front desk. It's in your welcome email, or just bookmark this page's result for next time.</p>
+
+  <form id="courseForm">
+    <label for="courseId">Course ID</label>
+    <input type="text" id="courseId" placeholder="e.g. wildwood" autocapitalize="off" autocorrect="off" autocomplete="off">
+    <div class="error" id="errorMsg">Enter your course ID to continue.</div>
+    <button type="submit">Continue to sign in</button>
+  </form>
+
+  <div class="foot">New to Cart Barn? <a href="03-landing-page.html#pricing">See pricing</a></div>
+</div>
+
+<script>
+  // Where the actual app lives — update this once the app is hosted at its final address.
+  var APP_URL = "/app/";
+
+  document.getElementById('courseForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    var input = document.getElementById('courseId');
+    var errorMsg = document.getElementById('errorMsg');
+    var slug = input.value.trim().toLowerCase().replace(/[^a-z0-9-]/g, '');
+    if (!slug) {
+      errorMsg.style.display = 'block';
+      return;
+    }
+    errorMsg.style.display = 'none';
+    window.location.href = APP_URL + '?course=' + encodeURIComponent(slug);
+  });
+</script>
+
+</body>
+</html>
