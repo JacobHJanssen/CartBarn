@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Set up your club — Cart Barn</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --green:#2F7D42; --green-dark:#1F5C2E;
+    --text:#292929; --text-soft:#666666;
+    --bg:#FFFFFF; --bg-soft:#F2F7F3; --border:#DDE5DD;
+    --error:#B3261E;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    background:var(--bg-soft); color:var(--text);
+    font-family:'Nunito', -apple-system, BlinkMacSystemFont, sans-serif;
+    line-height:1.55; font-size:16px; min-height:100vh;
+    display:flex; align-items:flex-start; justify-content:center; padding:40px 20px;
+  }
+  h1,h2{ font-weight:800; color:var(--green-dark); }
+  .card{ background:#fff; border:1px solid var(--border); border-radius:12px; padding:36px; max-width:460px; width:100%; }
+  .steps{ display:flex; gap:6px; margin-bottom:26px; }
+  .steps span{ height:5px; flex:1; border-radius:3px; background:var(--border); }
+  .steps span.done{ background:var(--green); }
+  h1{ font-size:22px; margin-bottom:6px; }
+  p.sub{ color:var(--text-soft); font-size:14.5px; margin-bottom:22px; }
+  label{ display:block; font-size:13px; font-weight:700; color:var(--text-soft); margin-bottom:5px; margin-top:16px; }
+  label:first-of-type{ margin-top:0; }
+  input[type=text], input[type=email], input[type=password], input[type=number]{
+    width:100%; padding:11px 12px; border-radius:6px; border:2px solid var(--border);
+    font-size:15px; font-family:inherit; color:var(--text); background:#fff;
+  }
+  input:focus{ outline:none; border-color:var(--green); }
+  .hint{ font-size:12.5px; color:var(--text-soft); margin-top:4px; }
+  .error{ display:none; color:var(--error); font-size:13.5px; margin-top:10px; background:#FCEAE9; padding:9px 11px; border-radius:6px; }
+  .error.show{ display:block; }
+  button{ width:100%; margin-top:22px; padding:13px; border:none; border-radius:6px; background:var(--green); color:#fff; font-size:15.5px; font-weight:700; font-family:inherit; cursor:pointer; }
+  button:hover{ background:var(--green-dark); }
+  button:disabled{ opacity:0.6; cursor:default; }
+  button.secondary{ background:#fff; color:var(--green-dark); border:2px solid var(--green); }
+  .id-row{ display:flex; align-items:center; gap:8px; }
+  .id-row span{ color:var(--text-soft); font-size:14px; white-space:nowrap; }
+
+  .logo-drop{
+    border:2px dashed var(--border); border-radius:10px; padding:20px; text-align:center;
+    cursor:pointer; margin-top:6px;
+  }
+  .logo-drop:hover{ border-color:var(--green); }
+  .logo-drop img{ max-width:120px; max-height:120px; border-radius:8px; display:block; margin:0 auto 10px; }
+  .logo-drop .placeholder{ color:var(--text-soft); font-size:14px; }
+  .logo-drop input{ display:none; }
+
+  .summary{ background:var(--bg-soft); border-radius:8px; padding:16px; margin-top:16px; font-size:14.5px; }
+  .summary div{ padding:5px 0; }
+  .summary b{ color:var(--green-dark); }
+  .link-box{ background:var(--bg-soft); border:1px solid var(--border); border-radius:8px; padding:12px 14px; font-size:14px; word-break:break-all; margin-top:8px; display:flex; justify-content:space-between; align-items:center; gap:10px; }
+  .link-box button{ width:auto; margin:0; padding:7px 12px; font-size:13px; flex-shrink:0; }
+
+  .device-steps{ margin-top:14px; }
+  .device-steps h3{ font-size:15px; color:var(--green-dark); margin:16px 0 6px; }
+  .device-steps ol{ margin-left:20px; font-size:14.5px; color:var(--text-soft); }
+  .device-steps li{ margin-bottom:5px; }
+
+  .step{ display:none; }
+  .step.active{ display:block; }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div class="steps">
+    <span id="dot1" class="done"></span><span id="dot2"></span><span id="dot3"></span><span id="dot4"></span><span id="dot5"></span>
+  </div>
+
+  <!-- STEP 1: Create account -->
+  <div class="step active" id="step1">
+    <h1>Set up your club</h1>
+    <p class="sub">A few minutes and you're checking out your first cart.</p>
+
+    <label for="clubName">Club name</label>
+    <input type="text" id="clubName" placeholder="e.g. Pine Ridge Golf Club">
+
+    <label for="clubId">Choose your club ID</label>
+    <div class="id-row"><span>cartbarn.online/app?course=</span><input type="text" id="clubId" placeholder="pineridge"></div>
+    <div class="hint">This is the link your staff will use every day — lowercase letters, numbers, and hyphens only.</div>
+
+    <label for="email">Your email</label>
+    <input type="email" id="email" placeholder="you@yourclub.com">
+
+    <label for="password">Choose a password</label>
+    <input type="password" id="password" placeholder="At least 6 characters">
+
+    <div class="error" id="step1Error"></div>
+    <button id="step1Btn" onclick="createAccount()">Create account</button>
+  </div>
+
+  <!-- STEP 2: Confirmation -->
+  <div class="step" id="step2">
+    <h1>You're in</h1>
+    <p class="sub">Your account is live. Here's what to keep.</p>
+    <div class="summary">
+      <div><b>Login email:</b> <span id="confirmEmail"></span></div>
+      <div><b>Club ID:</b> <span id="confirmClubId"></span></div>
+    </div>
+    <label>Your app link — bookmark this or add it to your home screen</label>
+    <div class="link-box">
+      <span id="confirmLink"></span>
+      <button onclick="copyLink()">Copy</button>
+    </div>
+    <button onclick="goToStep(3)">Continue</button>
+  </div>
+
+  <!-- STEP 3: Branding -->
+  <div class="step" id="step3">
+    <h1>Add your branding</h1>
+    <p class="sub">Shows up on your waiver and your login screen. Skip for now if you want — you can add this later.</p>
+
+    <label for="location">City, state</label>
+    <input type="text" id="location" placeholder="e.g. Bismarck, North Dakota">
+
+    <label>Logo</label>
+    <div class="logo-drop" id="logoDrop" onclick="document.getElementById('logoFile').click()">
+      <img id="logoPreview" style="display:none;">
+      <div class="placeholder" id="logoPlaceholder">Tap to upload a logo (PNG or JPG)</div>
+      <input type="file" id="logoFile" accept="image/*" onchange="handleLogo(event)">
+    </div>
+
+    <div class="error" id="step3Error"></div>
+    <button onclick="saveBranding()">Continue</button>
+  </div>
+
+  <!-- STEP 4: Fleet size -->
+  <div class="step" id="step4">
+    <h1>How many carts?</h1>
+    <p class="sub">Just for our records — doesn't limit anything.</p>
+    <label for="fleetSize">Number of carts</label>
+    <input type="number" id="fleetSize" min="1" placeholder="e.g. 40">
+    <button onclick="saveFleetSize()">Continue</button>
+  </div>
+
+  <!-- STEP 5: Device setup -->
+  <div class="step" id="step5">
+    <h1>Set up your iPad or tablet</h1>
+    <p class="sub">Do this once at the front desk, and it works like an app from then on.</p>
+
+    <div class="link-box">
+      <span id="finalLink"></span>
+      <button onclick="copyLink()">Copy</button>
+    </div>
+
+    <div class="device-steps">
+      <h3>On an iPad (Safari)</h3>
+      <ol>
+        <li>Open the link above in Safari</li>
+        <li>Tap the Share icon (square with an arrow) in the toolbar</li>
+        <li>Scroll down and tap "Add to Home Screen"</li>
+        <li>Tap "Add" — the Cart Barn icon now sits on the home screen like any app</li>
+      </ol>
+      <h3>On an Android tablet (Chrome)</h3>
+      <ol>
+        <li>Open the link above in Chrome</li>
+        <li>Tap the three-dot menu in the top right</li>
+        <li>Tap "Add to Home screen," then "Add"</li>
+      </ol>
+    </div>
+
+    <button onclick="finish()">Go to your app</button>
+  </div>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+  import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDJIIabFAKi0udH5K-si2G9CkPi61UlLTs",
+    authDomain: "wildwood-cart-rental.firebaseapp.com",
+    projectId: "wildwood-cart-rental",
+    storageBucket: "wildwood-cart-rental.firebasestorage.app",
+    messagingSenderId: "676236094624",
+    appId: "1:676236094624:web:3a990c0e6d559915edadc5"
+  };
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  const auth = getAuth(app);
+
+  window.__state = { clubId: "", email: "" };
+
+  window.goToStep = function(n){
+    for (let i=1;i<=5;i++){
+      document.getElementById('step'+i).classList.toggle('active', i===n);
+      document.getElementById('dot'+i).classList.toggle('done', i<=n);
+    }
+  };
+
+  window.createAccount = async function(){
+    const btn = document.getElementById('step1Btn');
+    const errEl = document.getElementById('step1Error');
+    errEl.classList.remove('show');
+
+    const clubName = document.getElementById('clubName').value.trim();
+    const clubIdRaw = document.getElementById('clubId').value.trim().toLowerCase();
+    const clubId = clubIdRaw.replace(/[^a-z0-9-]/g, '');
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
+
+    if (!clubName || !clubId || !email || password.length < 6) {
+      errEl.textContent = "Fill in every field — password needs at least 6 characters.";
+      errEl.classList.add('show');
+      return;
+    }
+
+    btn.disabled = true; btn.textContent = "Checking...";
+    try {
+      const existing = await getDoc(doc(db, "courses", clubId));
+      if (existing.exists()) {
+        errEl.textContent = "That club ID is already taken — try another.";
+        errEl.classList.add('show');
+        btn.disabled = false; btn.textContent = "Create account";
+        return;
+      }
+
+      btn.textContent = "Creating...";
+      const cred = await createUserWithEmailAndPassword(auth, email, password);
+
+      await setDoc(doc(db, "staffAccounts", cred.user.uid), { courseId: clubId });
+      await setDoc(doc(db, "courses", clubId), {
+        name: clubName,
+        subscriptionStatus: "trial",
+        staff: { managerEmails: [email.toLowerCase()] }
+      });
+
+      window.__state.clubId = clubId;
+      window.__state.email = email;
+      const link = "https://cartbarn.online/app/?course=" + clubId;
+      document.getElementById('confirmEmail').textContent = email;
+      document.getElementById('confirmClubId').textContent = clubId;
+      document.getElementById('confirmLink').textContent = link;
+      document.getElementById('finalLink').textContent = link;
+
+      goToStep(2);
+    } catch (e) {
+      errEl.textContent = e.message.includes('email-already-in-use')
+        ? "That email already has an account — try signing in instead."
+        : "Something went wrong: " + e.message;
+      errEl.classList.add('show');
+    }
+    btn.disabled = false; btn.textContent = "Create account";
+  };
+
+  window.copyLink = function(){
+    navigator.clipboard.writeText(document.getElementById('finalLink').textContent || document.getElementById('confirmLink').textContent);
+  };
+
+  let logoDataUrl = null;
+  window.handleLogo = function(event){
+    const file = event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(e){
+      const img = new Image();
+      img.onload = function(){
+        let { width, height } = img;
+        const maxDim = 400;
+        if (width > height && width > maxDim) { height *= maxDim/width; width = maxDim; }
+        else if (height > maxDim) { width *= maxDim/height; height = maxDim; }
+        const canvas = document.createElement('canvas');
+        canvas.width = width; canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = '#FFFFFF';
+        ctx.fillRect(0,0,width,height);
+        ctx.drawImage(img, 0, 0, width, height);
+        logoDataUrl = canvas.toDataURL('image/jpeg', 0.82);
+        document.getElementById('logoPreview').src = logoDataUrl;
+        document.getElementById('logoPreview').style.display = 'block';
+        document.getElementById('logoPlaceholder').style.display = 'none';
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  };
+
+  window.saveBranding = async function(){
+    const errEl = document.getElementById('step3Error');
+    errEl.classList.remove('show');
+    const location = document.getElementById('location').value.trim();
+    try {
+      const updates = {};
+      if (location) updates.location = location;
+      if (logoDataUrl) updates.logoUrl = logoDataUrl;
+      if (Object.keys(updates).length) {
+        await setDoc(doc(db, "courses", window.__state.clubId), updates, { merge: true });
+      }
+      goToStep(4);
+    } catch (e) {
+      errEl.textContent = "Couldn't save — check your connection and try again.";
+      errEl.classList.add('show');
+    }
+  };
+
+  window.saveFleetSize = async function(){
+    const val = parseInt(document.getElementById('fleetSize').value, 10);
+    try {
+      if (val) await setDoc(doc(db, "courses", window.__state.clubId), { fleetSize: val }, { merge: true });
+    } catch (e) { /* non-critical, continue regardless */ }
+    goToStep(5);
+  };
+
+  window.finish = function(){
+    window.location.href = "/app/?course=" + window.__state.clubId;
+  };
+</script>
+
+</body>
+</html>
